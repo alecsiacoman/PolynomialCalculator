@@ -1,5 +1,6 @@
 package View;
-import Controller.Operations;
+import Controller.Controller;
+import Model.Operations;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,6 +8,7 @@ import java.awt.event.*;
 
 public class Calculator extends JFrame {
 
+    Controller controller = new Controller(this);
     public JLabel title, pol1, pol2, result;
     public JTextField textPolynom1, textPolynom2, textResult;
     public JButton addBtn, subtractBtn, divideBtn, multiplyBtn, integrateBtn, derivBtn;
@@ -24,10 +26,6 @@ public class Calculator extends JFrame {
         addButtons();
         setActions();
     }
-
-    public String getPoly1(){ return textPolynom1.getText(); };
-    public String getPoly2(){ return textPolynom2.getText(); };
-    public String getResult(){ return textResult.getText(); };
 
     private void addTextFields() {
         textPolynom1 = new JTextField(70);
@@ -94,21 +92,27 @@ public class Calculator extends JFrame {
     }
 
     private void setActions(){
-        Operations op = new Operations();
-        addBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e){
-                op.addPolynomials();
-                op.resultConversion();
-                textResult.setText(op.getResString());
-            }
-        });
+        addBtn.addActionListener(controller);
+        subtractBtn.addActionListener(controller);
+    }
 
-        subtractBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e){
-                op.subtractPolynomial();
-                op.resultConversion();
-                textResult.setText(op.getResString());
-            }
-        });
+    public JButton getAddBtn() {
+        return addBtn;
+    }
+
+    public JButton  getSubtractBtn(){
+        return subtractBtn;
+    }
+
+    public JTextField getTextPolynom1() {
+        return textPolynom1;
+    }
+
+    public JTextField getTextPolynom2() {
+        return textPolynom2;
+    }
+
+    public JTextField getTextResult() {
+        return textResult;
     }
 }
