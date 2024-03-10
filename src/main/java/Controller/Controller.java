@@ -10,9 +10,6 @@ public class Controller implements ActionListener {
     private Operations op = new Operations();
     private Polynomial pol1 = new Polynomial();
     private Polynomial pol2 = new Polynomial();
-    private Polynomial res = new Polynomial();
-
-
     public Controller(Calculator v){
         this.view = v;
     }
@@ -26,11 +23,14 @@ public class Controller implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         getPolynoms();
-        if(source == view.getAddBtn()){
-            op.addOrSubtractPolynomials(pol1, pol2, 0);
-        }
+        if(source == view.getAddBtn())
+            op.additionOrSubtraction(pol1, pol2, 0);
         else if(source == view.getSubtractBtn())
-            op.addOrSubtractPolynomials(pol1, pol2, 1);
+            op.additionOrSubtraction(pol1, pol2, 1);
+        else if(source == view.getMultiplyBtn())
+            op.multiplication(pol1, pol2);
+
+
         view.getTextResult().setText(op.getRes().convertToString());
     }
 

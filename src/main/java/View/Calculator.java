@@ -9,7 +9,7 @@ import java.awt.event.*;
 public class Calculator extends JFrame {
 
     Controller controller = new Controller(this);
-    public JLabel title, pol1, pol2, result;
+    public JLabel title, pol1, pol2, result, example;
     public JTextField textPolynom1, textPolynom2, textResult;
     public JButton addBtn, subtractBtn, divideBtn, multiplyBtn, integrateBtn, derivBtn;
 
@@ -23,6 +23,8 @@ public class Calculator extends JFrame {
         title.setBounds(80, 20, 300, 30);
         add(title);
         addTextFields();
+        textPolynom1.setText("3x^2 + 2x + 1");
+        textPolynom2.setText("2x^2 + x + 3");
         addButtons();
         setActions();
     }
@@ -46,12 +48,17 @@ public class Calculator extends JFrame {
 
         result = new JLabel("Result: ");
         result.setFont(new Font("Courier New", Font.ITALIC, 20));
-        result.setBounds(50, 430, 150, 30);
+        result.setBounds(30, 430, 150, 30);
         textResult = new JTextField(70);
-        textResult.setBounds(160, 430, 170, 30);
+        textResult.setBounds(120, 430, 230, 30);
         textResult.setEditable(false);
         add(result);
         add(textResult);
+
+        example = new JLabel("Polynomial example: 2x^3 - 6x^2 + x + 9");
+        example.setFont(new Font("Courier New", Font.PLAIN, 15));
+        example.setBounds(18, 185, 360, 40);
+        add(example);
     }
 
     private void addButtons() {
@@ -94,6 +101,10 @@ public class Calculator extends JFrame {
     private void setActions(){
         addBtn.addActionListener(controller);
         subtractBtn.addActionListener(controller);
+        multiplyBtn.addActionListener(controller);
+        divideBtn.addActionListener(controller);
+        derivBtn.addActionListener(controller);
+        integrateBtn.addActionListener(controller);
     }
 
     public JButton getAddBtn() {
@@ -102,6 +113,22 @@ public class Calculator extends JFrame {
 
     public JButton  getSubtractBtn(){
         return subtractBtn;
+    }
+
+    public JButton getMultiplyBtn() {
+        return multiplyBtn;
+    }
+
+    public JButton getDivideBtn() {
+        return divideBtn;
+    }
+
+    public JButton getDerivBtn() {
+        return derivBtn;
+    }
+
+    public JButton getIntegrateBtn() {
+        return integrateBtn;
     }
 
     public JTextField getTextPolynom1() {

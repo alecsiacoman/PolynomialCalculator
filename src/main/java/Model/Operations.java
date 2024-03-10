@@ -1,13 +1,11 @@
 package Model;
-import Model.Polynomial;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Operations {
 
     private Polynomial res = new Polynomial();
-    public Polynomial addOrSubtractPolynomials(Polynomial pol1, Polynomial pol2, int operation){
+    public Polynomial additionOrSubtraction(Polynomial pol1, Polynomial pol2, int operation){
         res.getPoly().clear();
         pol1.getPoly().forEach((d1, c1) -> {
             pol2.getPoly().forEach((d2, c2) -> {
@@ -18,6 +16,19 @@ public class Operations {
                         if(operation == 1) //subtract
                              res.getPoly().put(d1, c1 - c2);
                 }
+            });
+        });
+        return res;
+    }
+
+    public Polynomial multiplication(Polynomial pol1, Polynomial pol2){
+        res.getPoly().clear();
+        pol1.getPoly().forEach((d1, c1) -> {
+            pol2.getPoly().forEach((d2, c2) -> {
+                double coeff = c1 * c2;
+                if(res.getPoly().containsKey(d1 + d2))
+                    coeff += res.getPoly().get(d1 + d2);
+                res.getPoly().put(d1 + d2, coeff);
             });
         });
         return res;

@@ -1,11 +1,10 @@
 package Model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Polynomial {
-    private HashMap<Integer,Double> poly = new HashMap<>();
+    private Map<Integer, Double> poly = new TreeMap<>(Comparator.reverseOrder());
 
     public void convertToPolynomial(String str){
         str = str.replace(" - ", " + -");
@@ -28,6 +27,7 @@ public class Polynomial {
                     degree = 0;
                 }
             }
+            //poly.put(degree, coeff);
             poly.put(degree, coeff);
         }
     }
@@ -36,6 +36,7 @@ public class Polynomial {
         String polyString;
         StringBuilder sb = new StringBuilder();
         poly.forEach((degree, coeff) ->
+        //poly.forEach((degree, coeff) ->
         {
             if(coeff != 0){
                 if(sb.length() == 0 && coeff < 0)
@@ -55,7 +56,7 @@ public class Polynomial {
         return polyString;
     }
 
-    public HashMap<Integer,Double> getPoly() {
+    public Map<Integer, Double> getPoly() {
         return poly;
     }
 }
