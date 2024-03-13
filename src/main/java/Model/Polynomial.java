@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Polynomial {
-    private Map<Integer, Double> poly = new TreeMap<>(Comparator.reverseOrder());
+    private TreeMap<Integer, Double> poly = new TreeMap<>(Comparator.reverseOrder());
 
     public void convertToPolynomial(String str){
         str = str.replace(" - ", " + -");
@@ -27,7 +27,6 @@ public class Polynomial {
                     degree = 0;
                 }
             }
-            //poly.put(degree, coeff);
             poly.put(degree, coeff);
         }
     }
@@ -36,7 +35,6 @@ public class Polynomial {
         String polyString;
         StringBuilder sb = new StringBuilder();
         poly.forEach((degree, coeff) ->
-        //poly.forEach((degree, coeff) ->
         {
             if(coeff != 0){
                 if(sb.length() == 0 && coeff < 0)
@@ -56,7 +54,15 @@ public class Polynomial {
         return polyString;
     }
 
-    public Map<Integer, Double> getPoly() {
+    public TreeMap<Integer, Double> getPoly() {
         return poly;
+    }
+
+    public void clearTreeMap(){
+        this.getPoly().clear();
+    }
+
+    public void setPoly(TreeMap<Integer, Double> poly) {
+        this.poly = poly;
     }
 }

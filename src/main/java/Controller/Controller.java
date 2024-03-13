@@ -4,6 +4,7 @@ import Model.Polynomial;
 import View.Calculator;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.TreeMap;
 
 public class Controller implements ActionListener {
     private Calculator view;
@@ -15,23 +16,34 @@ public class Controller implements ActionListener {
     }
 
     private void getPolynoms(){
-        pol1.convertToPolynomial(view.getTextPolynom1().getText());
-        pol2.convertToPolynomial(view.getTextPolynom2().getText());
+        String polynom1Text = view.getTextPolynom1();
+        String polynom2Text = view.getTextPolynom2();
+        pol1.convertToPolynomial(polynom1Text);
+        pol2.convertToPolynomial(polynom2Text);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         getPolynoms();
-        if(source == view.getAddBtn())
-            op.additionOrSubtraction(pol1, pol2, 0);
-        else if(source == view.getSubtractBtn())
-            op.additionOrSubtraction(pol1, pol2, 1);
-        else if(source == view.getMultiplyBtn())
-            op.multiplication(pol1, pol2);
-
-
-        view.getTextResult().setText(op.getRes().convertToString());
+        Polynomial result = new Polynomial();
+        if(source == view.getAddBtn()){
+            result.setPoly(op.additionOrSubtraction(pol1, pol2, 0));
+        }
+        else if(source == view.getSubtractBtn()) {
+            result.setPoly(op.additionOrSubtraction(pol1, pol2, 1));
+        }
+        else if(source == view.getMultiplyBtn()) {
+            result.setPoly(op.multiplication(pol1, pol2));
+        }
+//        else if(source == view.getDivideBtn())
+//            op.getRes().setPoly(op.division(pol1, pol2).getPoly());
+        else if(source == view.getDerivBtn()) {
+            result.setPoly(op.derivative(pol1));
+        }
+        else if(source == view.getIntegrateBtn()){
+            result.setPoly(op.integrate(pol1));
+        }
+        view.setTextResult(result.convertToString());
     }
-
 }

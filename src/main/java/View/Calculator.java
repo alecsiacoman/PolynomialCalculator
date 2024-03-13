@@ -23,8 +23,8 @@ public class Calculator extends JFrame {
         title.setBounds(80, 20, 300, 30);
         add(title);
         addTextFields();
-        textPolynom1.setText("3x^2 + 2x + 1");
-        textPolynom2.setText("2x^2 + x + 3");
+        textPolynom1.setText("x^3 - 2x^2 + 6x - 5");
+        textPolynom2.setText("x^2 - 1");
         addButtons();
         setActions();
     }
@@ -131,15 +131,15 @@ public class Calculator extends JFrame {
         return integrateBtn;
     }
 
-    public JTextField getTextPolynom1() {
-        return textPolynom1;
+    public String getTextPolynom1() {
+        return textPolynom1.getText();
     }
 
-    public JTextField getTextPolynom2() {
-        return textPolynom2;
+    public String getTextPolynom2() {
+        return textPolynom2.getText();
     }
 
-    public JTextField getTextResult() {
-        return textResult;
-    }
+    public void setTextResult(String str){ textResult.setText(str); };
+
+
 }
