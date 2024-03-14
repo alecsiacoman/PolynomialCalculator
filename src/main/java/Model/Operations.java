@@ -6,25 +6,38 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Operations {
 
-    public TreeMap<Integer,Double> additionOrSubtraction(Polynomial pol1, Polynomial pol2, int operation){
+    public TreeMap<Integer,Double> addition(Polynomial pol1, Polynomial pol2){
         TreeMap<Integer, Double> result = new TreeMap<>(pol1.getPoly());
         TreeMap<Integer, Double> treeMap = pol1.getPoly();
         pol2.getPoly().forEach((d, c) -> {
             if(treeMap.containsKey(d))
             {
                 double coeff = treeMap.get(d);
-                if(coeff - c != 0.0){
-                    if(operation == 0)
+                if(coeff - c != 0.0)
                         result.put(d, coeff + c);
-                    else
-                        result.put(d, coeff - c);
-                }
-                else {
+                else
                     result.remove(d);
-                }
             }
             else
                 result.put(d, c);
+        });
+        return result;
+    }
+
+    public TreeMap<Integer,Double> subtraction(Polynomial pol1, Polynomial pol2){
+        TreeMap<Integer, Double> result = new TreeMap<>(pol1.getPoly());
+        TreeMap<Integer, Double> treeMap = pol1.getPoly();
+        pol2.getPoly().forEach((d, c) -> {
+            if(treeMap.containsKey(d))
+            {
+                double coeff = treeMap.get(d);
+                if(coeff - c != 0.0)
+                    result.put(d, coeff - c);
+                else
+                    result.remove(d);
+            }
+            else
+                result.put(d, -c);
         });
         return result;
     }
@@ -66,7 +79,7 @@ public class Operations {
             multiplicationResult.setPoly(multiplication(partialQuotient, pol2));
 
             Polynomial subtractResult = new Polynomial();
-            subtractResult.setPoly(additionOrSubtraction(pol1, multiplicationResult, 1));
+            subtractResult.setPoly(subtraction(pol1, multiplicationResult));
             pol1 = subtractResult;
         }
         return quotient.getPoly();

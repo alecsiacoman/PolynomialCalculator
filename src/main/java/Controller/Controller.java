@@ -16,6 +16,8 @@ public class Controller implements ActionListener {
     }
 
     private void getPolynoms(){
+        pol1.clearTreeMap();
+        pol2.clearTreeMap();
         String polynom1Text = view.getTextPolynom1();
         String polynom2Text = view.getTextPolynom2();
         pol1.convertToPolynomial(polynom1Text);
@@ -27,13 +29,12 @@ public class Controller implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         getPolynoms();
-        //System.out.println(pol1.convertToString() + " and " + pol2.convertToString());
         Polynomial result = new Polynomial();
         if(source == view.getAddBtn()){
-            result.setPoly(op.additionOrSubtraction(pol1, pol2, 0));
+            result.setPoly(op.addition(pol1, pol2));
         }
         else if(source == view.getSubtractBtn()) {
-            result.setPoly(op.additionOrSubtraction(pol1, pol2, 1));
+            result.setPoly(op.subtraction(pol1, pol2));
         }
         else if(source == view.getMultiplyBtn()) {
             result.setPoly(op.multiplication(pol1, pol2));
