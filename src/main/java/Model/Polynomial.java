@@ -12,19 +12,27 @@ public class Polynomial {
         double coeff = 0;
         int degree = 0;
         for(String mono: monomials){
-            if(mono.contains("x^")){
-                String[] elem = mono.split("x\\^?"); //split by coefficient and degree
-                coeff = elem[0].trim().isEmpty() ? 1 : Double.parseDouble(elem[0].trim());
-                degree = Integer.parseInt(elem[1].trim());
-            }
-            else{
-                if(mono.contains("x")){
-                    coeff = mono.length() == 1 ? 1 : Double.parseDouble(mono.substring(0, mono.length() - 1));
-                    degree = 1;
+            if(!mono.isEmpty()){
+                if(mono.contains("x^")){
+                    String[] elem = mono.split("x\\^?"); //split by coefficient and degree
+                    if(elem[0].equals("-"))
+                        coeff = -1;
+                    else
+                        coeff = elem[0].trim().isEmpty() ? 1 : Double.parseDouble(elem[0].trim());
+                    degree = Integer.parseInt(elem[1].trim());
                 }
                 else{
-                    coeff = Double.parseDouble(mono);
-                    degree = 0;
+                    if(mono.contains("x")){
+                        if(mono.length() == 2 && mono.contains("-"))
+                            coeff = -1;
+                        else
+                            coeff = mono.length() == 1 ? 1 : Double.parseDouble(mono.substring(0, mono.length() - 1));
+                        degree = 1;
+                    }
+                    else{
+                        coeff = Double.parseDouble(mono);
+                        degree = 0;
+                    }
                 }
             }
             poly.put(degree, coeff);
@@ -46,8 +54,11 @@ public class Polynomial {
                 if(Math.abs(coeff) != 1 || degree == 0){
                     sb.append(Math.abs(coeff));
                 }
-                if(degree > 0)
+                if(degree > 1)
                     sb.append("x^").append(degree);
+                else if (degree == 1) {
+                    sb.append("x");
+                }
             }
         });
         polyString = sb.length() == 0 ? "0" : sb.toString();
@@ -64,5 +75,18 @@ public class Polynomial {
 
     public void setPoly(TreeMap<Integer, Double> poly) {
         this.poly = poly;
+    }
+
+    public int getDegree(){
+        return poly.firstKey();
+    }
+
+    public double getCoefficient(){
+        int degree = this.getDegree();
+        return poly.get(degree);
+    }
+
+    public boolean isEmpty(){
+        return poly.isEmpty();
     }
 }

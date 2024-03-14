@@ -20,12 +20,14 @@ public class Controller implements ActionListener {
         String polynom2Text = view.getTextPolynom2();
         pol1.convertToPolynomial(polynom1Text);
         pol2.convertToPolynomial(polynom2Text);
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         getPolynoms();
+        //System.out.println(pol1.convertToString() + " and " + pol2.convertToString());
         Polynomial result = new Polynomial();
         if(source == view.getAddBtn()){
             result.setPoly(op.additionOrSubtraction(pol1, pol2, 0));
@@ -36,12 +38,13 @@ public class Controller implements ActionListener {
         else if(source == view.getMultiplyBtn()) {
             result.setPoly(op.multiplication(pol1, pol2));
         }
-//        else if(source == view.getDivideBtn())
-//            op.getRes().setPoly(op.division(pol1, pol2).getPoly());
+        else if(source == view.getDivideBtn())
+            result.setPoly(op.division(pol1, pol2));
         else if(source == view.getDerivBtn()) {
             result.setPoly(op.derivative(pol1));
         }
         else if(source == view.getIntegrateBtn()){
+
             result.setPoly(op.integrate(pol1));
         }
         view.setTextResult(result.convertToString());

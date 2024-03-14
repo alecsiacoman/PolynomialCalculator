@@ -1,21 +1,28 @@
 package Model;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Operations {
 
     public TreeMap<Integer,Double> additionOrSubtraction(Polynomial pol1, Polynomial pol2, int operation){
-        TreeMap<Integer, Double> result = pol1.getPoly();
+        TreeMap<Integer, Double> result = new TreeMap<>(pol1.getPoly());
+        TreeMap<Integer, Double> treeMap = pol1.getPoly();
         pol2.getPoly().forEach((d, c) -> {
-            if(result.containsKey(d))
-                if(operation == 0)
-                    result.put(d, result.get(d) + c);
-                else
-                    result.put(d, result.get(d) - c);
+            if(treeMap.containsKey(d))
+            {
+                double coeff = treeMap.get(d);
+                if(coeff - c != 0.0){
+                    if(operation == 0)
+                        result.put(d, coeff + c);
+                    else
+                        result.put(d, coeff - c);
+                }
+                else {
+                    result.remove(d);
+                }
+            }
             else
                 result.put(d, c);
         });
@@ -23,7 +30,7 @@ public class Operations {
     }
 
     public TreeMap<Integer,Double> multiplication(Polynomial pol1, Polynomial pol2){
-        TreeMap<Integer, Double> result = new TreeMap();
+        TreeMap<Integer, Double> result = new TreeMap(Comparator.reverseOrder());
         pol1.getPoly().forEach((d1, c1) -> {
             pol2.getPoly().forEach((d2, c2) -> {
                 double coeff = c1 * c2;
@@ -36,53 +43,37 @@ public class Operations {
     }
 
     private void interchangePolynomials(Polynomial pol1, Polynomial pol2){
-        if(pol1.getPoly().firstKey() < pol2.getPoly().firstKey()){ //interchange
+        if(pol1.getDegree() < pol2.getDegree()){ //interchange
             TreeMap<Integer, Double> auxTree = pol1.getPoly();
-            pol1.getPoly().clear();
-            pol1.getPoly().putAll(pol2.getPoly());
-            pol2.getPoly().clear();
-            pol2.getPoly().putAll(auxTree);
+            pol1.setPoly(pol2.getPoly());
+            pol2.setPoly(auxTree);
         }
     }
 
-//    public Polynomial division(Polynomial pol1, Polynomial pol2){
-//        Polynomial quotient = new Polynomial();
-//        Polynomial remainder = new Polynomial();
-//        //remainder is actually pol1 and quotient is result poly, aka res
-////        System.out.println(pol1.getPoly().firstKey() + " " + pol2.getPoly().firstKey());
-////        interchangePolynomials(pol1, pol2);
-////        System.out.println(pol1.convertToString());
-////        System.out.println(pol2.convertToString());
-////        System.out.println(pol1.getPoly().firstEntry().getValue() + " " + pol2.getPoly().firstEntry().getValue());
-//
-//        ///*
-//        while(!pol1.getPoly().isEmpty() && !pol2.getPoly().isEmpty() && pol1.getPoly().firstKey() >= pol2.getPoly().firstKey()){ //do these steps while remainder's degree is greater than the quotient's
-////            System.out.println(pol1.getPoly().firstKey() + " " + pol2.getPoly().firstKey());
-//            System.out.println(pol1.convertToString());
-//            System.out.println(pol2.convertToString());
-//            System.out.println(pol1.getPoly().firstEntry().getValue() + " " + pol2.getPoly().firstEntry().getValue());
-//            interchangePolynomials(pol1, pol2);
-//            int d = pol1.getPoly().firstKey() - pol2.getPoly().firstKey();
-//            double c = pol1.getPoly().firstEntry().getValue() / pol2.getPoly().firstEntry().getValue();
-//
-//            System.out.println(d + " " + c);
-//            quotient.getPoly().put(d, c);
-//            System.out.println(quotient.convertToString());
-//
-//           // System.out.println(multiplication(quotient, pol2).convertToString());
-//            remainder = additionOrSubtraction(pol1, multiplication(quotient, pol2), 1);
-//           // System.out.println(remainder.convertToString());
-//            pol1.getPoly().clear();
-//            pol1.getPoly().putAll(remainder.getPoly());
-//        //    System.out.println(pol1.convertToString());
-//        }
-////*/
-//
-//        return quotient;
-//    }
+    public TreeMap<Integer, Double> division(Polynomial pol1, Polynomial pol2){
+        interchangePolynomials(pol1, pol2); //pol1 - dividend; pol2 - divisor
+
+        Polynomial quotient = new Polynomial();
+        int cnt=1;
+        while(pol1.getDegree() >= pol2.getDegree()){
+            int newDegree = pol1.getDegree() - pol2.getDegree();
+            double newCoeff = pol1.getCoefficient() / pol2.getCoefficient();
+            quotient.getPoly().put(newDegree, newCoeff);
+
+            Polynomial partialQuotient = new Polynomial();
+            partialQuotient.getPoly().put(newDegree, newCoeff);
+            Polynomial multiplicationResult = new Polynomial();
+            multiplicationResult.setPoly(multiplication(partialQuotient, pol2));
+
+            Polynomial subtractResult = new Polynomial();
+            subtractResult.setPoly(additionOrSubtraction(pol1, multiplicationResult, 1));
+            pol1 = subtractResult;
+        }
+        return quotient.getPoly();
+    }
 
     public TreeMap<Integer,Double> derivative(Polynomial pol1){
-        TreeMap<Integer, Double> result = new TreeMap<>();
+        TreeMap<Integer, Double> result = new TreeMap<>(Comparator.reverseOrder());
         for(Map.Entry<Integer, Double> entry : pol1.getPoly().entrySet()){
             int degree = entry.getKey();
             double coeff = entry.getValue();
@@ -93,7 +84,7 @@ public class Operations {
     }
 
     public TreeMap<Integer,Double> integrate(Polynomial pol1){
-        TreeMap<Integer, Double> result = new TreeMap<>();
+        TreeMap<Integer, Double> result = new TreeMap<>(Comparator.reverseOrder());
         DecimalFormat df = new DecimalFormat("#.##");
         for(Map.Entry<Integer, Double> entry : pol1.getPoly().entrySet()){
             int degree = entry.getKey();
