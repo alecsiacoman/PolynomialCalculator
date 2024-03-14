@@ -7,26 +7,28 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Calculator extends JFrame {
-
     Controller controller = new Controller(this);
-    public JLabel title, pol1, pol2, result, example;
+    public JLabel lblTitle, lblPol1, lblPol2, lblResult, lblExample;
     public JTextField textPolynom1, textPolynom2, textResult;
-    public JButton addBtn, subtractBtn, divideBtn, multiplyBtn, integrateBtn, derivBtn;
+    public JButton btnAdd, btnSubtract, btnDivide, btnMultiply, btnIntegrate, btnDerivate;
 
     public Calculator() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
 
-        //title of the calculator
-        title = new JLabel("CALCULATOR");
-        title.setFont(new Font("Courier New", Font.BOLD, 35));
-        title.setBounds(80, 20, 300, 30);
-        add(title);
+        //title of calculator
+        lblTitle = new JLabel("CALCULATOR");
+        lblTitle.setFont(new Font("Courier New", Font.BOLD, 35));
+        lblTitle.setBounds(80, 20, 300, 30);
+        add(lblTitle);
+
         addTextFields();
-        textPolynom1.setText("x^3 - 2x^2 + 6x - 5");
-        textPolynom2.setText("x^2 - 1");
+        addLabels();
         addButtons();
         setActions();
+
+        //        textPolynom1.setText("x^3 - 2x^2 + 6x - 5");
+        //        textPolynom2.setText("x^2 - 1");
     }
 
     private void addTextFields() {
@@ -37,98 +39,105 @@ public class Calculator extends JFrame {
         add(textPolynom1);
         add(textPolynom2);
 
-        pol1 = new JLabel("Polynom 1: ");
-        pol2 = new JLabel("Polynom 2: ");
-        pol1.setFont(new Font("Courier New", Font.ITALIC, 20));
-        pol2.setFont(new Font("Courier New", Font.ITALIC, 20));
-        pol1.setBounds(30, 100, 150, 30);
-        pol2.setBounds(30, 140, 150, 30);
-        add(pol1);
-        add(pol2);
-
-        result = new JLabel("Result: ");
-        result.setFont(new Font("Courier New", Font.ITALIC, 20));
-        result.setBounds(30, 430, 150, 30);
         textResult = new JTextField(70);
-        textResult.setBounds(120, 430, 230, 30);
+        textResult.setBounds(120, 420, 230, 30);
         textResult.setEditable(false);
-        add(result);
         add(textResult);
+    }
 
-        example = new JLabel("Polynomial example: 2x^3 - 6x^2 + x + 9");
-        example.setFont(new Font("Courier New", Font.PLAIN, 15));
-        example.setBounds(18, 185, 360, 40);
-        add(example);
+    private void addLabels(){
+        lblPol1 = new JLabel("Polynom 1: ");
+        lblPol2 = new JLabel("Polynom 2: ");
+        setPropertiesLabels(lblPol1);
+        setPropertiesLabels(lblPol2);
+        lblPol1.setBounds(30, 100, 150, 30);
+        lblPol2.setBounds(30, 140, 150, 30);
+        add(lblPol1);
+        add(lblPol2);
+
+        lblResult = new JLabel("Result: ");
+        setPropertiesLabels(lblResult);
+        lblResult.setBounds(30, 420, 150, 30);
+        add(lblResult);
+
+        lblExample = new JLabel("Polynomial Example: 2x^3 - 6x^2 + x + 9");
+        lblExample.setFont(new Font("Courier New", Font.PLAIN, 15));
+        lblExample.setBounds(18, 185, 360, 40);
+        add(lblExample);
     }
 
     private void addButtons() {
         //creating the button
-        addBtn = new JButton("Add");
-        subtractBtn = new JButton("Subtract");
-        multiplyBtn = new JButton("Multiply");
-        divideBtn = new JButton("Divide");
-        integrateBtn = new JButton("Integrate");
-        derivBtn = new JButton("Derivate");
+        btnAdd = new JButton("Add");
+        btnSubtract = new JButton("Subtract");
+        btnMultiply = new JButton("Multiply");
+        btnDivide = new JButton("Divide");
+        btnIntegrate = new JButton("Integrate");
+        btnDerivate = new JButton("Derivate");
 
         //properties
-        addBtn.setBounds(70, 250, 120, 30);
-        subtractBtn.setBounds(200, 250, 120, 30);
-        multiplyBtn.setBounds(70, 290, 120, 30);
-        divideBtn.setBounds(200, 290, 120, 30);
-        integrateBtn.setBounds(70, 330, 120, 30);
-        derivBtn.setBounds(200, 330, 120, 30);
+        btnAdd.setBounds(70, 250, 120, 30);
+        btnSubtract.setBounds(200, 250, 120, 30);
+        btnMultiply.setBounds(70, 290, 120, 30);
+        btnDivide.setBounds(200, 290, 120, 30);
+        btnIntegrate.setBounds(70, 330, 120, 30);
+        btnDerivate.setBounds(200, 330, 120, 30);
 
-        setProperties(addBtn);
-        setProperties(subtractBtn);
-        setProperties(multiplyBtn);
-        setProperties(divideBtn);
-        setProperties(integrateBtn);
-        setProperties(derivBtn);
+        setPropertiesButton(btnAdd);
+        setPropertiesButton(btnSubtract);
+        setPropertiesButton(btnMultiply);
+        setPropertiesButton(btnDivide);
+        setPropertiesButton(btnIntegrate);
+        setPropertiesButton(btnDerivate);
 
         //adding the button to the window
-        add(addBtn);
-        add(subtractBtn);
-        add(multiplyBtn);
-        add(divideBtn);
-        add(integrateBtn);
-        add(derivBtn);
+        add(btnAdd);
+        add(btnSubtract);
+        add(btnMultiply);
+        add(btnDivide);
+        add(btnIntegrate);
+        add(btnDerivate);
     }
 
-    private void setProperties(JButton btn){
+    private void setPropertiesButton(JButton btn){
         btn.setFont(new Font("Courier New", Font.BOLD, 15));
     }
 
+    private void setPropertiesLabels(JLabel lbl){
+        lbl.setFont(new Font("Courier New", Font.ITALIC, 20));
+    }
+
     private void setActions(){
-        addBtn.addActionListener(controller);
-        subtractBtn.addActionListener(controller);
-        multiplyBtn.addActionListener(controller);
-        divideBtn.addActionListener(controller);
-        derivBtn.addActionListener(controller);
-        integrateBtn.addActionListener(controller);
+        btnAdd.addActionListener(controller);
+        btnSubtract.addActionListener(controller);
+        btnMultiply.addActionListener(controller);
+        btnDivide.addActionListener(controller);
+        btnDerivate.addActionListener(controller);
+        btnIntegrate.addActionListener(controller);
     }
 
-    public JButton getAddBtn() {
-        return addBtn;
+    public JButton getBtnAdd() {
+        return btnAdd;
     }
 
-    public JButton  getSubtractBtn(){
-        return subtractBtn;
+    public JButton  getBtnSubtract(){
+        return btnSubtract;
     }
 
-    public JButton getMultiplyBtn() {
-        return multiplyBtn;
+    public JButton getBtnMultiply() {
+        return btnMultiply;
     }
 
-    public JButton getDivideBtn() {
-        return divideBtn;
+    public JButton getBtnDivide() {
+        return btnDivide;
     }
 
-    public JButton getDerivBtn() {
-        return derivBtn;
+    public JButton getBtnDerivate() {
+        return btnDerivate;
     }
 
-    public JButton getIntegrateBtn() {
-        return integrateBtn;
+    public JButton getBtnIntegrate() {
+        return btnIntegrate;
     }
 
     public String getTextPolynom1() {

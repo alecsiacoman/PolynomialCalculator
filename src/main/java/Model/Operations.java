@@ -13,7 +13,7 @@ public class Operations {
             if(treeMap.containsKey(d))
             {
                 double coeff = treeMap.get(d);
-                if(coeff - c != 0.0)
+                if(coeff + c != 0.0)
                         result.put(d, coeff + c);
                 else
                     result.remove(d);
@@ -56,7 +56,7 @@ public class Operations {
     }
 
     private void interchangePolynomials(Polynomial pol1, Polynomial pol2){
-        if(pol1.getDegree() < pol2.getDegree()){ //interchange
+        if(pol1.getDegree() < pol2.getDegree()){
             TreeMap<Integer, Double> auxTree = pol1.getPoly();
             pol1.setPoly(pol2.getPoly());
             pol2.setPoly(auxTree);

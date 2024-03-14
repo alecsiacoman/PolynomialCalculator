@@ -1,5 +1,6 @@
 package Model;
 
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -41,6 +42,7 @@ public class Polynomial {
 
     public String convertToString(){
         String polyString;
+        DecimalFormat df = new DecimalFormat("#.##");
         StringBuilder sb = new StringBuilder();
         poly.forEach((degree, coeff) ->
         {
@@ -52,7 +54,7 @@ public class Polynomial {
                         sb.append(coeff > 0 ? " + " : " - ");
                     }
                 if(Math.abs(coeff) != 1 || degree == 0){
-                    sb.append(Math.abs(coeff));
+                    sb.append(df.format(Math.abs(coeff)));
                 }
                 if(degree > 1)
                     sb.append("x^").append(degree);
@@ -84,9 +86,5 @@ public class Polynomial {
     public double getCoefficient(){
         int degree = this.getDegree();
         return poly.get(degree);
-    }
-
-    public boolean isEmpty(){
-        return poly.isEmpty();
     }
 }
