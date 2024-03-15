@@ -89,4 +89,5 @@ public class OperationsTest {
         result.put(1, -5.0);
         assertEquals(op.integrate(pol1), result);
     }
+    //orice
 }
