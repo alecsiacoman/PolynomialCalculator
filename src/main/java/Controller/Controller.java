@@ -23,42 +23,41 @@ public class Controller implements ActionListener {
         Polynomial result = new Polynomial();
         view.setVisibility(false);
         if(source == view.getBtnAdd()){
-            result.setPoly(op.addition(pol1, pol2));
+            result = op.addition(pol1, pol2);
         }
         else if(source == view.getBtnSubtract()) {
-            result.setPoly(op.subtraction(pol1, pol2));
+            result = op.subtraction(pol1, pol2);
         }
         else if(source == view.getBtnMultiply()) {
-            result.setPoly(op.multiplication(pol1, pol2));
+            result = op.multiplication(pol1, pol2);
         }
         else if(source == view.getBtnDivide()){
-            division(result);
+            result = division();
         }
         else if(source == view.getBtnDerivate()) {
-            result.setPoly(op.derivative(pol2));
+            result =op.derivative(pol2);
             view.setTextResult2(result.convertToString());
-            result.setPoly(op.derivative(pol1));
+            result = op.derivative(pol1);
         }
         else if(source == view.getBtnIntegrate()){
-            result.setPoly(op.integrate(pol2));
+            result = op.integrate(pol2);
             view.setTextResult2(result.convertToString());
-            result.setPoly(op.integrate(pol1));
+            result = op.integrate(pol1);
         }
 
         view.setTextResult(result.convertToString());
     }
 
-    private void division(Polynomial result){
-        TreeMap<Integer, Double>[] treeMaps = new TreeMap[2];
-        treeMaps = op.division(pol1, pol2);
-        result.setPoly(treeMaps[1]);
-        view.setLblRemainder(result.convertToString());
-        result.setPoly(treeMaps[0]);
+    private Polynomial division(){
+        Polynomial[] polyArray = new Polynomial[2];
+        polyArray = op.division(pol1, pol2);
+        view.setLblRemainder(polyArray[1].convertToString());
+        return polyArray[0];
     }
 
     private void getPolynoms(){
-        pol1.clearTreeMap();
-        pol2.clearTreeMap();
+        pol1.getPoly().clear();
+        pol2.getPoly().clear();
         String polynom1Text = view.getTextPolynom1();
         String polynom2Text = view.getTextPolynom2();
         pol1.convertToPolynomial(polynom1Text);

@@ -71,20 +71,15 @@ public class Polynomial {
         return poly;
     }
 
-    public void clearTreeMap(){
-        this.getPoly().clear();
-    }
-
-    public void setPoly(TreeMap<Integer, Double> poly) {
-        this.poly = poly;
-    }
-
     public int getDegree(){
         return poly.firstKey();
     }
-
     public double getCoefficient(){
         int degree = this.getDegree();
         return poly.get(degree);
+    }
+
+    public void put(int degree, double coeff){
+        poly.put(degree, coeff);
     }
 }

@@ -25,69 +25,68 @@ public class OperationsTest {
 
     @Test
     public void additionTest(){
-        TreeMap<Integer, Double> result = new TreeMap<>(Comparator.reverseOrder());
+        Polynomial result = new Polynomial();
         result.put(3, 1.0);
         result.put(2, -1.0);
         result.put(1, 6.0);
         result.put(0, -6.0);
-        assertEquals(op.addition(pol1, pol2), result);
+        assertEquals(op.addition(pol1, pol2).getPoly(), result.getPoly());
 
     }
 
     @Test
     public void subtractionTest(){
-        TreeMap<Integer, Double> result = new TreeMap<>(Comparator.reverseOrder());
+        Polynomial result = new Polynomial();
         result.put(3, 1.0);
         result.put(2, -3.0);
         result.put(1, 6.0);
         result.put(0, -4.0);
-        assertEquals(op.subtraction(pol1, pol2), result);
+        assertEquals(op.subtraction(pol1, pol2).getPoly(), result.getPoly());
     }
 
     @Test
     public void multiplicationTest(){
-        TreeMap<Integer, Double> result = new TreeMap<>(Comparator.reverseOrder());
+        Polynomial result = new Polynomial();
         result.put(5, 1.0);
         result.put(4, -2.0);
         result.put(3, 5.0);
         result.put(2, -3.0);
         result.put(1, -6.0);
         result.put(0, 5.0);
-        assertEquals(op.multiplication(pol1, pol2), result);
+        assertEquals(op.multiplication(pol1, pol2).getPoly(), result.getPoly());
     }
 
     @Test
     public void divisionTest(){
-        TreeMap<Integer, Double>[] result = new TreeMap[2];
-        result[0] = new TreeMap<>(Comparator.reverseOrder());
-        result[1] = new TreeMap<>(Comparator.reverseOrder());
+        Polynomial[] result = new Polynomial[2];
+        result[0] = new Polynomial();
+        result[1] = new Polynomial();
         result[0].put(1, 1.0);
         result[0].put(0, -2.0);
         result[1].put(1, 7.0);
         result[1].put(0, -7.0);
-        TreeMap<Integer, Double>[] divide = new TreeMap[2];
+        Polynomial[] divide = new Polynomial[2];
         divide = op.division(pol1, pol2);
-        assertEquals(divide[0], result[0]);
-        assertEquals(divide[1], result[1]);
+        assertEquals(divide[0].getPoly(), result[0].getPoly());
+        assertEquals(divide[1].getPoly(), result[1].getPoly());
     }
 
     @Test
     public void derivationTest(){
-        TreeMap<Integer, Double> result = new TreeMap<>(Comparator.reverseOrder());
+        Polynomial result = new Polynomial();
         result.put(2, 3.0);
         result.put(1, -4.0);
         result.put(0, 6.0);
-        assertEquals(op.derivative(pol1), result);
+        assertEquals(op.derivative(pol1).getPoly(), result.getPoly());
     }
 
     @Test
-    public void integrationTest(){
-        TreeMap<Integer, Double> result = new TreeMap<>(Comparator.reverseOrder());
+    public void integrationTest() {
+        Polynomial result = new Polynomial();
         result.put(4, 0.25);
         result.put(3, -0.67);
         result.put(2, 3.0);
         result.put(1, -5.0);
-        assertEquals(op.integrate(pol1), result);
+        assertEquals(op.integrate(pol1).getPoly(), result.getPoly());
     }
-    //orice
 }

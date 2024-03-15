@@ -27,8 +27,8 @@ public class Calculator extends JFrame {
         addButtons();
         setActions();
 
-                textPolynom1.setText("x^3 - 2x^2 + 6x - 5");
-              textPolynom2.setText("x^2 - 1");
+//        textPolynom1.setText("x^3 - 2x^2 + 6x - 5");
+//        textPolynom2.setText("x^2 - 1");
     }
 
     private void addTextFields() {
