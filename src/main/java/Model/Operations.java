@@ -63,11 +63,10 @@ public class Operations {
         }
     }
 
-    public TreeMap<Integer, Double> division(Polynomial pol1, Polynomial pol2){
+    public TreeMap<Integer, Double>[] division(Polynomial pol1, Polynomial pol2){
         interchangePolynomials(pol1, pol2); //pol1 - dividend; pol2 - divisor
 
         Polynomial quotient = new Polynomial();
-        int cnt=1;
         while(pol1.getDegree() >= pol2.getDegree()){
             int newDegree = pol1.getDegree() - pol2.getDegree();
             double newCoeff = pol1.getCoefficient() / pol2.getCoefficient();
@@ -82,7 +81,7 @@ public class Operations {
             subtractResult.setPoly(subtraction(pol1, multiplicationResult));
             pol1 = subtractResult;
         }
-        return quotient.getPoly();
+        return new TreeMap[]{quotient.getPoly(), pol1.getPoly()};
     }
 
     public TreeMap<Integer,Double> derivative(Polynomial pol1){

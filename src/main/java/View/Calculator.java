@@ -8,7 +8,7 @@ import java.awt.event.*;
 
 public class Calculator extends JFrame {
     Controller controller = new Controller(this);
-    public JLabel lblTitle, lblPol1, lblPol2, lblResult, lblExample;
+    public JLabel lblTitle, lblPol1, lblPol2, lblResult, lblExample, lblRemainder;
     public JTextField textPolynom1, textPolynom2, textResult;
     public JButton btnAdd, btnSubtract, btnDivide, btnMultiply, btnIntegrate, btnDerivate;
 
@@ -27,8 +27,8 @@ public class Calculator extends JFrame {
         addButtons();
         setActions();
 
-        //        textPolynom1.setText("x^3 - 2x^2 + 6x - 5");
-        //        textPolynom2.setText("x^2 - 1");
+                textPolynom1.setText("x^3 - 2x^2 + 6x - 5");
+              textPolynom2.setText("x^2 - 1");
     }
 
     private void addTextFields() {
@@ -60,10 +60,15 @@ public class Calculator extends JFrame {
         lblResult.setBounds(30, 420, 150, 30);
         add(lblResult);
 
-        lblExample = new JLabel("Polynomial Example: 2x^3 - 6x^2 + x + 9");
-        lblExample.setFont(new Font("Courier New", Font.PLAIN, 15));
-        lblExample.setBounds(18, 185, 360, 40);
+        lblExample = new JLabel("Example: _-_2x^3_+_4x^2_-_x_+_2 (_ - blank)");
+        lblExample.setFont(new Font("Courier New", Font.PLAIN, 13));
+        lblExample.setBounds(22, 185, 360, 40);
         add(lblExample);
+
+        lblRemainder = new JLabel();
+        lblRemainder.setFont(new Font("Courier New", Font.PLAIN, 13));
+        lblRemainder.setBounds(30, 450, 250, 30);
+        add(lblRemainder);
     }
 
     private void addButtons() {
@@ -150,5 +155,12 @@ public class Calculator extends JFrame {
 
     public void setTextResult(String str){ textResult.setText(str); };
 
+    public void setLblRemainder(String str){
+        lblRemainder.setVisible(true);
+        lblRemainder.setText("Remainder: " + str);
+    }
 
+    public void setVisibility(boolean hide){
+        lblRemainder.setVisible(hide);
+    }
 }

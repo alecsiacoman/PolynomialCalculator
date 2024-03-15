@@ -21,7 +21,7 @@ public class Controller implements ActionListener {
         Object source = e.getSource();
         getPolynoms();
         Polynomial result = new Polynomial();
-
+        view.setVisibility(false);
         if(source == view.getBtnAdd()){
             result.setPoly(op.addition(pol1, pol2));
         }
@@ -31,8 +31,9 @@ public class Controller implements ActionListener {
         else if(source == view.getBtnMultiply()) {
             result.setPoly(op.multiplication(pol1, pol2));
         }
-        else if(source == view.getBtnDivide())
-            result.setPoly(op.division(pol1, pol2));
+        else if(source == view.getBtnDivide()){
+            division(result);
+        }
         else if(source == view.getBtnDerivate()) {
             result.setPoly(op.derivative(pol1));
         }
@@ -41,6 +42,14 @@ public class Controller implements ActionListener {
         }
 
         view.setTextResult(result.convertToString());
+    }
+
+    private void division(Polynomial result){
+        TreeMap<Integer, Double>[] treeMaps = new TreeMap[2];
+        treeMaps = op.division(pol1, pol2);
+        result.setPoly(treeMaps[1]);
+        view.setLblRemainder(result.convertToString());
+        result.setPoly(treeMaps[0]);
     }
 
     private void getPolynoms(){
