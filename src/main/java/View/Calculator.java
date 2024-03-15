@@ -9,7 +9,7 @@ import java.awt.event.*;
 public class Calculator extends JFrame {
     Controller controller = new Controller(this);
     public JLabel lblTitle, lblPol1, lblPol2, lblResult, lblExample, lblRemainder;
-    public JTextField textPolynom1, textPolynom2, textResult;
+    public JTextField textPolynom1, textPolynom2, textResult, textResult2;
     public JButton btnAdd, btnSubtract, btnDivide, btnMultiply, btnIntegrate, btnDerivate;
 
     public Calculator() {
@@ -43,6 +43,12 @@ public class Calculator extends JFrame {
         textResult.setBounds(120, 420, 230, 30);
         textResult.setEditable(false);
         add(textResult);
+
+        textResult2 = new JTextField(70);
+        textResult2.setBounds(120, 455, 230, 30);
+        textResult2.setEditable(false);
+        textResult2.setVisible(false);
+        add(textResult2);
     }
 
     private void addLabels(){
@@ -161,6 +167,12 @@ public class Calculator extends JFrame {
     }
 
     public void setVisibility(boolean hide){
+        textResult2.setVisible(hide);
         lblRemainder.setVisible(hide);
+    }
+
+    public void setTextResult2(String str){
+        textResult2.setVisible(true);
+        textResult2.setText(str);
     }
 }

@@ -35,9 +35,13 @@ public class Controller implements ActionListener {
             division(result);
         }
         else if(source == view.getBtnDerivate()) {
+            result.setPoly(op.derivative(pol2));
+            view.setTextResult2(result.convertToString());
             result.setPoly(op.derivative(pol1));
         }
         else if(source == view.getBtnIntegrate()){
+            result.setPoly(op.integrate(pol2));
+            view.setTextResult2(result.convertToString());
             result.setPoly(op.integrate(pol1));
         }
 
