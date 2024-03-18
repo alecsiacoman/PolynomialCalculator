@@ -1,5 +1,6 @@
 package Model;
 
+import javax.swing.*;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -14,13 +15,18 @@ public class Polynomial {
         int degree = 0;
         for(String mono: monomials){
             if(!mono.isEmpty()){
-                if(mono.contains("x^")){
+                if(mono.contains("x^")) {
                     String[] elem = mono.split("x\\^?"); //split by coefficient and degree
-                    if(elem[0].equals("-"))
-                        coeff = -1;
-                    else
-                        coeff = elem[0].trim().isEmpty() ? 1 : Double.parseDouble(elem[0].trim());
-                    degree = Integer.parseInt(elem[1].trim());
+                    try {
+                        if (elem[0].equals("-"))
+                            coeff = -1;
+                        else
+                            coeff = elem[0].trim().isEmpty() ? 1 : Double.parseDouble(elem[0].trim());
+                        degree = Integer.parseInt(elem[1].trim());
+                    } catch (NumberFormatException e) {
+                        showError("Invalid polynomial! Please respect the example.");
+                        return;
+                    }
                 }
                 else{
                     if(mono.contains("x")){
@@ -31,13 +37,22 @@ public class Polynomial {
                         degree = 1;
                     }
                     else{
-                        coeff = Double.parseDouble(mono);
-                        degree = 0;
+                        try{
+                            coeff = Double.parseDouble(mono);
+                            degree = 0;
+                        }catch (NumberFormatException e) {
+                            showError("Invalid coefficient: " + mono);
+                            return;
+                        }
                     }
                 }
             }
             poly.put(degree, coeff);
         }
+    }
+
+    private void showError(String message){
+        JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public String convertToString(){

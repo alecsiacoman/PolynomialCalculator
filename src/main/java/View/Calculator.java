@@ -7,10 +7,10 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Calculator extends JFrame {
-    Controller controller = new Controller(this);
-    public JLabel lblTitle, lblPol1, lblPol2, lblResult, lblExample, lblRemainder;
-    public JTextField textPolynom1, textPolynom2, textResult, textResult2;
-    public JButton btnAdd, btnSubtract, btnDivide, btnMultiply, btnIntegrate, btnDerivate;
+    private Controller controller = new Controller(this);
+    private JLabel lblTitle, lblPol1, lblPol2, lblResult, lblExample, lblRemainder;
+    private JTextField textPolynom1, textPolynom2, textResult, textResult2;
+    private JButton btnAdd, btnSubtract, btnDivide, btnMultiply, btnIntegrate, btnDerivate;
 
     public Calculator() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
